@@ -1,7 +1,15 @@
 // I will most probably end up using EXPRESS 
 
+    const URL = "http://localhost:8000";
+
     // Gives access to the front end library of Socket.io
-    const socket = io();
+    // const socket = io();
+    // const socket = io(URL, { autoConnect: false });
+    const socket = io({ autoConnect: false });
+    /*
+        autoConnect is set to false so the connection is not established right away. 
+        We will manually call socket.connect() later, once the user has selected a username.
+    */
 
     socket.on('new-connection', response=>{
         console.log(response)
@@ -10,7 +18,16 @@
     socket.on('chat-response', response_message_body=>{
         // console.log(response_message_body)
         // add_response_message(response_message_body)
+        console.log(response_message_body);
         display_message(response_message_body, "received");
+    });
+
+
+    socket.on('new-user', response_message_body=>{
+        // console.log(response_message_body)
+        // add_response_message(response_message_body)
+        console.log(response_message_body);
+        alert(response_message_body.id+" has joined the chat");
     });
     ////////////////////////////////////////////////////////
 
@@ -56,7 +73,7 @@
 
     // adds message text to the message stream window
     function display_message(message_body, display_type="sent"){
-
+        
         // CHAT VIEW
         const message_stream = document.getElementById("message-view");
         

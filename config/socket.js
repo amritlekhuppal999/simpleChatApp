@@ -6,14 +6,17 @@ const io = new socketio(server);
 // Run when client connects
 io.on('connection', socket=>{
     console.log('New WS connection');
+    let socket_id = socket.id;
 
     // emits to just the connecting user
     socket.emit('new-connection', {
         message: "Welcome to Chatroom...",
+        socket_id: socket_id
     });
 
     // Sends message to everyone/Broadcasts to everyone EXCEPT the user that connects
-    socket.broadcast.emit('message', {
+    socket.broadcast.emit('new-user', {
+        id: socket_id,
         message: 'A user has joined the chat.',
         userName: '',
         time: "00:00",
@@ -36,3 +39,13 @@ io.on('connection', socket=>{
 });
 
 export default io;
+
+
+
+
+
+/*
+    io is an instance of the entire socket.io circuit/server
+
+    socket is reference to the individual sockets connected. (working on this info)
+*/
