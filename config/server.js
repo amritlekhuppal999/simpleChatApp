@@ -82,10 +82,15 @@ const server = http.createServer( async(client_request, server_response) =>{
         else if(page_view_1 == "public"){
             let page_view_2 = requested_page_array[1];
             let page_view_3 = requested_page_array[2];
-            
+
             return_page = path.join(ROOT_DIR, page_view_1, page_view_2, page_view_3);
             const extname = String(path.extname(return_page)).toLowerCase();
             contentType = mimeTypes[extname] || 'application/octet-stream';
+        }
+
+        // LOGIN PAGE
+        else if(page_view_1 == "login"){
+            return_page = path.join(ROOT_DIR, 'views', 'login.html');
         }
         
         // 404 Page Not Found
