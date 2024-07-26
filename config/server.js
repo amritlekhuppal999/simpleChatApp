@@ -1,3 +1,11 @@
+/*
+    WE ARE USING EXPRESS. REFER TO THE `./config/express.js` SCRIPT
+    
+    THIS PAGE IS NOT IN USE.
+    ITS HERE JUST FOR REFERENCE...
+*/
+
+
 //ES6 method
 import http from 'http';
 import fs from 'fs/promises';
@@ -53,13 +61,16 @@ const server = http.createServer( async(client_request, server_response) =>{
         else if(page_view_1 == "chatroom"){
             return_page = path.join(ROOT_DIR, 'views', 'chatroom.html');
         }
+        else if(page_view_1 == "chat"){
+            return_page = path.join(ROOT_DIR, 'views', 'chat-old.html');
+        }
 
         // CHATROOM UI DEMO
         else if(page_view_1 == "chatroom-ui-demo"){
             return_page = path.join(ROOT_DIR, 'views', 'chatroom-ui-demo.html');
         }
 
-        // CONTROLLERS
+        // CONTROLLERS (This looks stupid...)
         else if(page_view_1 == "controllers"){
             let page_view_2 = requested_page_array[1];
             contentType = "application/javascript";
@@ -80,6 +91,7 @@ const server = http.createServer( async(client_request, server_response) =>{
 
         // PUBLIC RESOURCE
         else if(page_view_1 == "public"){
+                        
             let page_view_2 = requested_page_array[1];
             let page_view_3 = requested_page_array[2];
 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHATROOM</title>
+       
+    <!-- <style></style> -->
+    <!-- <link rel="stylesheet" href="../public/css/chatroom.css"> -->
+    <link rel="stylesheet" href="/css/chatroom.css">
+</head>
+<body>
+    
+    <section class="msger">
+        <header class="msger-header">
+          <div class="msger-header-title">
+            <i class="fas fa-comment-alt"></i> 
+            <span id="header-msgr-title">Welcome to your chatroom</span> 
+          </div>
+          <div class="msger-header-options">
+            <span><i class="fas fa-cog"></i></span>
+          </div>
+        </header>
+        
+        <!-- Message View -->
+        <main class="msger-chat" id="message-view"></main>
+        
+        <!-- Message Form -->
+        <form class="msger-inputarea">
+            <input 
+                type="text" 
+                id="message-content"
+                class="msger-input" 
+                placeholder="Enter your message..."
+            />
+            
+            <!-- Send Message BTN -->
+            <button type="submit" id="send-message" class="msger-send-btn">Send</button>
+        </form>
+    </section>
+
+
+    <!-- Socket.io Front End Lib -->
+    <script src="/socket.io/socket.io.js"></script>    
+
+    <!-- <script src="../public/js/chatroom.js"></script> -->
+    <script src="/js/chatroom.js"></script>
+</body>
+</html>
