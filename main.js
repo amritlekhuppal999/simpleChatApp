@@ -2,8 +2,8 @@
  * USING EXPRESS
  */
 import app from './config/express.js';  // HOLDS our route
-import io from './config/socket.js';    // GETTING socket instance `io`
-const PORT = process.env.PORT;      // GETTING PORT ADDRESS
+import socketHandler from './config/socket-handler.js';    // GETTING socket instance `io`
+import { Server as socketio } from 'socket.io';
 
 /*
 
@@ -11,16 +11,23 @@ const PORT = process.env.PORT;      // GETTING PORT ADDRESS
 
 */
 
+// GETTING PORT ADDRESS
+const PORT = process.env.PORT;      
 
 // EXPRESS Instance
-app.listen(PORT, ()=>{
+const server = app.listen(PORT, ()=>{
     console.log(`Server started at PORT ${PORT}`);
 });
 
+// Socket instance
+const io = new socketio(server);
 
-///////////////////////////////////////////////// 
-////////////////////----/////////////////////////
-/////////////////////////////////////////////////
+// Socket connection handler
+socketHandler(io);
+
+
+/////////////////////////////////////////////////----/////////////////////////////////////////////
+/////////////////////////////////////////////////----/////////////////////////////////////////////
 
 
 

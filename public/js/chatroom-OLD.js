@@ -16,27 +16,24 @@
         console.log(response)
     });
 
+    socket.on('chat-response', response_message_body=>{
+        // console.log(response_message_body)
+        // add_response_message(response_message_body)
+        console.log(response_message_body);
+        display_message(response_message_body, "received");
+    });
+
+
     socket.on('new-user', response_message_body=>{
         // console.log(response_message_body)
         // add_response_message(response_message_body)
         console.log(response_message_body);
         alert(response_message_body.id+" has joined the chat");
     });
-
-    socket.on('chat-response', response_message_body=>{
-        // console.log(response_message_body)
-        // add_response_message(response_message_body)
-        console.log(response_message_body);
-        // display_message(response_message_body, "received");
-        received_chat_msg(response_message_body);
-    });
-
-
-    
     ////////////////////////////////////////////////////////
 
 
-    let userName = prompt("Please enter your name:");
+    let userName = prompt("Please enetr your name:");
     if(userName == null || userName.length == 0){
         userName = "User";
     }
@@ -72,8 +69,7 @@
 
     function send_message(message_body){
         socket.emit('chat-message', message_body);
-        // display_message(message_body, "sent");
-        sent_chat_msg(message_body)
+        display_message(message_body, "sent");
     }
 
     // adds message text to the message stream window
@@ -131,48 +127,6 @@
         }
         // else {}
     }
-
-    function received_chat_msg(message_body){
-        const message_stream = document.getElementById("message-view");
-        const DIV = document.createElement('div');
-        DIV.classList.add("direct-chat-msg");
-        
-        let ui = `
-            <div class="direct-chat-infos clearfix">
-                <span class="direct-chat-name float-left">${message_body.userName}</span>
-                <span class="direct-chat-timestamp float-right">${message_body.time}</span>
-            </div>
-            
-            <img class="direct-chat-img" src="/AdminLTE/dist/img/user1-128x128.jpg" alt="message user image">
-            
-            <div class="direct-chat-text">
-                ${message_body.text}
-            </div>`;
-
-        DIV.innerHTML = ui;
-        message_stream.appendChild(DIV);
-    }
-
-    function sent_chat_msg(message_body){
-        const message_stream = document.getElementById("message-view");
-        const DIV = document.createElement('div');
-        DIV.classList.add("direct-chat-msg", "right");
-
-        let ui = `
-            <div class="direct-chat-infos clearfix">
-                <span class="direct-chat-name float-right">${message_body.userName}</span>
-                <span class="direct-chat-timestamp float-left">${message_body.time}</span>
-            </div>
-            
-            <img class="direct-chat-img" src="/AdminLTE/dist/img/user3-128x128.jpg" alt="message user image">
-            
-            <div class="direct-chat-text">
-                ${message_body.text}
-            </div>`;
-
-        DIV.innerHTML = ui;
-        message_stream.appendChild(DIV);
-    }
     
     // UI CREDITS
-    console.log("UI from:", "\nhttps://adminlte.io/");
+    console.log("UI taken from:", "\nhttps://codepen.io/sajadhsm/pen/odaBdd");

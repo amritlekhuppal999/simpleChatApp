@@ -1,83 +1,39 @@
 import express from 'express';
 import path from 'path';
-import {ROOT_DIR, renderViews, return_page_views} from '../backend-globals.js';
+import {ROOT_DIR, renderViews} from '../backend-globals.js';
+import {getHomepage, getChatroom, getOldChatroom, getOldChatroomUI, getLoginPage, getRegisterPage, getRecoverPasswordPage} from './route-handler.js';
 import { setTimeout } from 'timers/promises';
-
 
 const PORT = process.env.PORT;
 const APP_NAME = process.env.APP_NAME;
 const app = express();
 
-
-
+// console.log(app)
 
 // SET STATIC FOLDER using a MIDDLEWARE
 app.use(express.static(path.join(ROOT_DIR, 'public')));
 
+app.use((req, res, next) => {
+    console.log(`Request URL: ${req.url}`);
+    next();
+});
 
-// NODE MODULES 
-
-    // SOCKET.IO MODULE    
-    app.get('/socket.io/socket.io.js', (client_request, server_response)=>{
-        let return_module = path.join(ROOT_DIR, 'node_modules', 'socket.io', 'client-dist', 'socket.io.js');
-        server_response.sendFile(return_module)
-    });
-
-    
-// NODE MODULES END
 
 // VIEWS
 
     // HOME
-    app.get('/', (client_request, server_response)=>{
-        // let return_view = path.join(ROOT_DIR, 'views', 'index.html');
-        let page_data = {
-            page: 'index.html',
-            page_title: `${APP_NAME} | Home`,
-            page_css: [],
-            page_scripts: [],
-        };
-        let return_view = renderViews(page_data);
-        server_response.send(return_view);
-    });
-    app.get('/home', (client_request, server_response)=>{
-        // let return_view = path.join(ROOT_DIR, 'views', 'index.html');
-        let page_data = {
-            page: 'index.html',
-            page_title: `${APP_NAME} | Home`,
-            page_css: [],
-            page_scripts: [],
-        };
-        let return_view = renderViews(page_data);
-        server_response.send(return_view);
-    });
+    app.get('/', getHomepage);
+    app.get('/home', getHomepage);
 
     //Chatroom
-    app.get('/chatroom', (client_request, server_response)=>{
-        // let return_view = path.join(ROOT_DIR, 'views', 'chatrooms', 'chatroom.html');
-        let page_data = {
-            page: path.join('chatrooms', 'chatroom.html'),
-            page_title: `${APP_NAME} | Chatroom`,
-            page_css: [],
-            page_scripts: [],
-        };
-        let return_view = renderViews(page_data);
-        server_response.send(return_view)
-    });
-    app.get('/chatroom-old', (client_request, server_response)=>{
-        let return_view = path.join(ROOT_DIR, 'views', 'chatroom-old.html');
-        server_response.sendFile(return_view)
-    });
-    app.get('/chatroom-ui-demo', (client_request, server_response)=>{
-        let return_view = path.join(ROOT_DIR, 'views', 'chatroom-ui-demo.html');
-        server_response.sendFile(return_view)
-    });
+    app.get('/chatroom', getChatroom);
+    app.get('/chatroom-old', getOldChatroom);
+    app.get('/chatroom-ui-demo', getOldChatroomUI);
 
     // Login Page
-    app.get('/login', (client_request, server_response)=>{
-        let return_view = path.join(ROOT_DIR, 'views', 'login.html');
-        server_response.sendFile(return_view)
-    });
+    app.get('/login', getLoginPage);
+    app.get('/register', getRegisterPage);
+    app.get('/forgot-password', getRecoverPasswordPage);
 
 // VIEWS END
 
@@ -99,10 +55,6 @@ app.use(express.static(path.join(ROOT_DIR, 'public')));
     });
 
 // More MIDDLEWARES END
-
-
-
-
 
 export default app;
 
