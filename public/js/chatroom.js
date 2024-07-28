@@ -3,10 +3,10 @@
     const URL = "http://localhost:8000";
 
     // Gives access to the front end library of Socket.io
-    const socket = io();
+    // const socket = io();
     // const socket = io(URL, { autoConnect: false });
     
-    // const socket = io({ autoConnect: false });
+    const socket = io({ autoConnect: false });
     /*
         autoConnect is set to false so the connection is not established right away. 
         We will manually call socket.connect() later, once the user has selected a username.
