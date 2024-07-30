@@ -3,10 +3,10 @@
     const URL = "http://localhost:8000";
 
     // Gives access to the front end library of Socket.io
-    // const socket = io();
+    const socket = io();
     // const socket = io(URL, { autoConnect: false });
     
-    const socket = io({ autoConnect: false });
+    // const socket = io({ autoConnect: false });
     /*
         autoConnect is set to false so the connection is not established right away. 
         We will manually call socket.connect() later, once the user has selected a username.
@@ -24,10 +24,8 @@
     });
 
     socket.on('chat-response', response_message_body=>{
-        // console.log(response_message_body)
-        // add_response_message(response_message_body)
-        console.log(response_message_body);
         // display_message(response_message_body, "received");
+        console.log(response_message_body);
         received_chat_msg(response_message_body);
     });
 

@@ -1,8 +1,15 @@
 import express from 'express';
+// import session from 'express-session';
 import path from 'path';
-import {ROOT_DIR, renderViews} from '../backend-globals.js';
-import {getHomepage, getChatroom, getOldChatroom, getOldChatroomUI, getLoginPage, getRegisterPage, getRecoverPasswordPage} from './route-handler.js';
 import { setTimeout } from 'timers/promises';
+
+import {ROOT_DIR, renderViews} from '../globals.js';
+import * as Views from './route-handler.js';
+import * as Middlewares from './middlewares.js';
+
+import isAuthenticated from '../controllers/isAuthenticated.js';
+import logoutController from '../controllers/logout-controller.js';
+import {dummyLogin} from '../controllers/login-controller.js';
 
 const PORT = process.env.PORT;
 const APP_NAME = process.env.APP_NAME;
@@ -13,48 +20,49 @@ const app = express();
 // SET STATIC FOLDER using a MIDDLEWARE
 app.use(express.static(path.join(ROOT_DIR, 'public')));
 
-app.use((req, res, next) => {
-    console.log(`Request URL: ${req.url}`);
-    next();
-});
+// get URL MIDDLEWARE
+app.use(Middlewares.getURL);
+
+// SET Session settings MIDDLEWARE
+app.use(Middlewares.sessionMiddleware);
+
+// console.log('Session Details', Middlewares.sessionMiddleware)
 
 
 // VIEWS
 
     // HOME
-    app.get('/', getHomepage);
-    app.get('/home', getHomepage);
+    app.get('/', isAuthenticated, Views.getHomepage);
+    app.get('/home', isAuthenticated, Views.getHomepage);
 
     //Chatroom
-    app.get('/chatroom', getChatroom);
-    app.get('/chatroom-old', getOldChatroom);
-    app.get('/chatroom-ui-demo', getOldChatroomUI);
+    app.get('/chatroom', isAuthenticated, Views.getChatroom);
+    app.get('/chatroom-old', Views.getOldChatroom);
+    app.get('/chatroom-ui-demo', Views.getOldChatroomUI);
 
-    // Login Page
-    app.get('/login', getLoginPage);
-    app.get('/register', getRegisterPage);
-    app.get('/forgot-password', getRecoverPasswordPage);
+    // Login, Register, Forgot-Password
+    app.get('/login', Views.getLoginPage);
+    app.get('/register', Views.getRegisterPage);
+    app.get('/forgot-password', Views.getRecoverPasswordPage);
 
+    // About Me
+    app.get('/about-me', Views.getAboutMe);
 // VIEWS END
 
 // CONTROLLERS
-    app.get('/controllers', (client_request, server_response)=>{
-        let return_view = path.join(ROOT_DIR, 'views', 'login.html');
-        server_response.sendFile(return_view)
-    });
+    
+    // Login User (DUMMY LOGIN)
+    app.get('/dummy-login', dummyLogin);
+
+    // Logout
+    app.get('/logout', logoutController);
 // CONTROLLERS
 
 
+// 404 Page Not Found MIDDLEWARE
+app.use(Middlewares.pageNotFound);
 
-// More MIDDLEWARES
-    
-    // Add a 404 middleware at the end of all route definitions
-    app.use((client_request, server_response, next) => {
-        let return_view = path.join(ROOT_DIR, 'views', '404.html');
-        server_response.status(404).sendFile(return_view);
-    });
 
-// More MIDDLEWARES END
 
 export default app;
 
