@@ -6,36 +6,56 @@ export default function socketHandler(io){
 
     // IO middleware injected with session middleware
     io.engine.use(sessionMiddleware);
+
+    let initialization_data = {
+        userInfo: {
+            user_id: '',
+            userName: '',
+            profileImg:'',
+            email: '',
+        },
+
+        metaData:{
+            socket_id: '',
+            device: '',
+            connection_timestamp: '',
+            sessionExpiry: '',
+            connection_message: ''
+        }
+    };    
     
 
     // Run when client connects
     io.on('connection', (socket) => {
         console.log('New WS connection');
-        let sessions = socket.request.session;
-
+        
         const socketId = socket.id;
-        const user_id = sessions.user.user_id ? sessions.user.user_id : 11;
-        const userName = sessions.user.name ? sessions.user.name : 'ALU';
-        const email = sessions.user.email ? sessions.user.email : 'amr@gmail.com';
-        const device = '';
+        let sessions = socket.request.session;  // access the express session data 
 
-        // access the express session data 
-        // console.log(socket.request.session)
-        // console.log(sessions.user)
+        if(sessions.user){
+
+            initialization_data.userInfo.user_id = sessions.user.user_id ? sessions.user.user_id : 11;
+            initialization_data.userInfo.userName = sessions.user.name ? sessions.user.name : 'ALU';
+            initialization_data.userInfo.email = sessions.user.email ? sessions.user.email : 'amr@gmail.com';
+            initialization_data.userInfo.device = '';
+            
+            initialization_data.metaData.sessionExpiry = sessions.cookie.expires
+        }
+
+        // these will update as new users connect, so we don't need to redefine them over and over
+        initialization_data.metaData.socket_id = socketId;
+        initialization_data.metaData.connection_timestamp = currentTime();
+
+        
+        // We just need to update the info message part, for guest and self connection.
     
-        // Emits to just the connecting user
-        socket.emit('new-connection', {
-            message: `Welcome to Chatroom ${userName}`,
-            socket_id: socketId
-        });
+        // Emits to just the connecting user (Connection from your POV) //socket.emit('new-connection')
+        initialization_data.metaData.connection_message = `Welcome to Chatroom ${initialization_data.userInfo.userName}`;
+        socket.emit('new-connection', initialization_data);
     
-        // Sends message to everyone except the user that connects
-        socket.broadcast.emit('new-user', {
-            id: socketId,
-            message: `${userName} has joined the chat.`,
-            userName: userName,
-            time: currentTime(),
-        });
+        // Sends message to everyone except the user that connects (When OTHERS connect from your POV)
+        initialization_data.metaData.connection_message = `${initialization_data.userInfo.userName} has joined the chat.`;
+        socket.broadcast.emit('new-user', initialization_data);
     
         // Listen for chat message
         socket.on('chat-message', (messageBody) => {

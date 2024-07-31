@@ -1,4 +1,15 @@
+<style>
+    .fs_smaller{
+        font-size: smaller;
+    }
+    .whatsapp_chat_grey{
+        background-color: #202c33;
+    }
 
+    .whatsapp_chat_green{
+        background-color: #005c4b;
+    }
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -23,18 +34,19 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    
-                    <div class="card direct-chat direct-chat-primary">
+                     
+                    <div class="card direct-chat direct-chat-primary "> <!-- collapsed-card -->
                         
                         <!-- Card Header -->
-                        <div class="card-header">
+                        <div class="card-header" id="chat-header">
                             <h3 class="card-title" id="header-msgr-title">Direct Chat</h3>
                             
                             <div class="card-tools">
-                                <span data-toggle="tooltip" title="3 New Messages" class="badge badge-primary">3</span>
+                                <!-- <span data-toggle="tooltip" title="3 New Messages" class="badge badge-primary">3</span> -->
                                 
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
+                                    <!-- <i class="fas fa-plus" id="connect-chat-open"></i> -->
                                 </button>
 
                                 <button type="button" class="btn btn-tool" data-toggle="tooltip" title="Contacts"
@@ -42,19 +54,20 @@
                                     <i class="fas fa-comments"></i>
                                 </button>
 
-                                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
                                 </button>
                             </div>
                         </div>
                         <!-- /.card-header -->
 
                         <!-- Card Body -->
-                        <div class="card-body">
+                        <div class="card-body" id="chat-body">
                             <!-- Conversations are loaded here -->
                             <div 
                                 class="direct-chat-messages" 
                                 id="message-view"
-                                style="height:350px">
+                                style="height:52vh">
                             </div>
             
                             <!-- Contacts are loaded here -->
@@ -157,7 +170,7 @@
                         </div>
                         
                         <!-- Card Footer -->
-                        <div class="card-footer">
+                        <div class="card-footer" id="chat-footer">
                             <!-- <form action="#" method="post"></form> -->
 
                             <div class="input-group">
@@ -192,4 +205,8 @@
 <script src="/socket.io/socket.io.js"></script> 
 
 
+<script src="/js/globals.js"></script>
 <script src="/js/chatroom.js"></script>
+
+
+

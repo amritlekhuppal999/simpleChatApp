@@ -10,7 +10,10 @@ const sessionMiddleware = session({
     secret: '#123/*)*&whatyoug0nn@d0', // Change this to a strong secret key
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+    cookie: { 
+        secure: false,  // Set to true if using HTTPS
+        maxAge: (24 * 60 * 60 * 1000), // 24 hours
+    } 
     // store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL }), // Optional, if using MongoDB
 });
 

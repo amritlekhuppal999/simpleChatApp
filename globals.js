@@ -51,7 +51,7 @@ const renderViews = (page_data) => {
                 <title>${page_data.page_title}</title>
                 ${header}
             </head>
-            <body class="hold-transition sidebar-mini">
+            <body class="hold-transition sidebar-mini layout-fixed">
                 ${user_info_section}
                 <div class="wrapper">
 
