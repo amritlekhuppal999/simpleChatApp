@@ -30,6 +30,7 @@ async function fetch_data() {
         // const user = await users.findOne(query);
         const cursor = await users.find({});
         let result = await cursor.toArray();
+        // if(result.acknowledged && result.insertedId){}
         console.log(result);
         // console.log(user);
     } 

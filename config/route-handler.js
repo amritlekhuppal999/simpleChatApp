@@ -48,7 +48,16 @@ function getLoginPage(client_request, server_response){
 // Register Page
 function getRegisterPage(client_request, server_response){
     let return_view = path.join(ROOT_DIR, 'views', 'register.html');
-    server_response.sendFile(return_view)
+    server_response.sendFile(return_view);
+
+    // let page_data = {
+    //     page: path.join('chatrooms', 'chatroom.html'),
+    //     page_title: `${APP_NAME} | Chatroom`,
+    //     page_css: [],
+    //     page_scripts: [],
+    //     user_data: client_request.session.user ?  client_request.session.user : false
+    // };
+    // let return_view = renderViews(page_data);
 }
 
 // Recover Password

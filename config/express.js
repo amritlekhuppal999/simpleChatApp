@@ -9,7 +9,8 @@ import * as Middlewares from './middlewares.js';
 
 import isAuthenticated from '../controllers/isAuthenticated.js';
 import logoutController from '../controllers/logout-controller.js';
-import {dummyLogin} from '../controllers/login-controller.js';
+import {userLogin, dummyLogin} from '../controllers/login-controller.js';
+import {userRegister} from '../controllers/register-controller.js';
 
 const PORT = process.env.PORT;
 const APP_NAME = process.env.APP_NAME;
@@ -19,6 +20,10 @@ const app = express();
 
 // SET STATIC FOLDER using a MIDDLEWARE
 app.use(express.static(path.join(ROOT_DIR, 'public')));
+
+// to deal with formData in (json or string)
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 // get URL MIDDLEWARE
 app.use(Middlewares.getURL);
@@ -53,6 +58,11 @@ app.use(Middlewares.sessionMiddleware);
     
     // Login User (DUMMY LOGIN)
     app.get('/dummy-login', dummyLogin);
+    
+    app.post('/login-user', userLogin);
+    
+    // Register User
+    app.post('/register-user', userRegister);
 
     // Logout
     app.get('/logout', logoutController);
