@@ -1,7 +1,6 @@
 import { sessionMiddleware } from "./middlewares.js";
 import { currentTime } from "../globals.js";
 
-
 export default function socketHandler(io){
 
     // IO middleware injected with session middleware
@@ -24,9 +23,12 @@ export default function socketHandler(io){
         }
     };    
     
+    let users = [];
 
     // Run when client connects
     io.on('connection', (socket) => {
+        // socket: its the individual socket
+        
         console.log('New WS connection');
         
         const socketId = socket.id;
@@ -34,13 +36,19 @@ export default function socketHandler(io){
 
         if(sessions.user){
 
-            initialization_data.userInfo.user_id = sessions.user.user_id ? sessions.user.user_id : 11;
-            initialization_data.userInfo.userName = sessions.user.name ? sessions.user.name : 'ALU';
-            initialization_data.userInfo.email = sessions.user.email ? sessions.user.email : 'amr@gmail.com';
+            initialization_data.userInfo.user_id = null;
+            initialization_data.userInfo.userName = sessions.user.name ? sessions.user.name : 'jgfgh';
+            initialization_data.userInfo.email = sessions.user.email ? sessions.user.email : 'uydbh@gmail767.com';
             initialization_data.userInfo.device = '';
             
-            initialization_data.metaData.sessionExpiry = sessions.cookie.expires
+            initialization_data.metaData.sessionExpiry = sessions.cookie.expires;
+
+            // User Table to manage active users
+            users[socketId] = sessions.user;
         }
+
+        // console.log('user array:', users);
+        // console.log('sessions:', sessions);
 
         // these will update as new users connect, so we don't need to redefine them over and over
         initialization_data.metaData.socket_id = socketId;
@@ -65,7 +73,18 @@ export default function socketHandler(io){
     
         // Runs when client disconnects
         socket.on('disconnect', () => {
-            io.emit('message', 'A user has left the chat.');
+            // console.log(`${initialization_data.userInfo.userName} has disconnected`);
+
+            io.emit('disconnect-message', {
+                user_data: initialization_data,
+                message: `User ${initialization_data.userInfo.userName} has left the chat.`
+            });
+
+            let index = users.indexOf(initialization_data.metaData.socket_id);
+            if (index !== -1) {
+                users.splice(index, 1);
+            }
+            // console.log(users)
         });
     });
 }

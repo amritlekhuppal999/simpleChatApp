@@ -2,6 +2,9 @@ import url from 'url';
 import path from 'path';
 import fs from 'fs';
 
+import bcrypt from 'bcrypt'; 
+const saltRounds = 10;      // Number of rounds for salt generation
+
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -19,13 +22,25 @@ const database_name = process.env.MONGO_DB;
 const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_port}/?authSource=${database_name}`;
 
 
+// get Hashed Password
+    async function hashPassword(pswd_str, saltRounds=10){
+        return await bcrypt.hash(pswd_str, saltRounds);
+    }
+// get Hashed Password END
+
+// check Hashed Password
+    async function checkHashedPassword(user_password, hashed_password){
+        return await bcrypt.compare(user_password, hashed_password);
+    }
+// check Hashed Password END
+
 
 // currently not in use
     const return_page_views = (URI) =>{
         let requested_page_array = URI.split(/(\/)/).filter(Boolean);
         return requested_page_array.filter(part => part !== "/")
     }
-
+// currently not in use END
 
 // Function to read file content
     const readFile = (filePath) => {
@@ -72,7 +87,9 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
                     ${user_info_section}
                     <div class="wrapper">
 
-                        ${navbar} ${sidebar} ${content} ${control_sidebar} ${footer}
+                        ${navbar} ${sidebar} 
+                        ${content} 
+                        ${control_sidebar} ${footer}
 
                     </div>
 
@@ -99,6 +116,7 @@ export {
     ROOT_DIR,
     database_name,
     DB_CONNECTION_STRING,
+    hashPassword, checkHashedPassword,
     return_page_views,
     renderViews,
     currentTime

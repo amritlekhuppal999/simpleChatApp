@@ -17,14 +17,13 @@
     // socket.disconnect();
 
     // Gives access to the front end library of Socket.io
-    const socket = io(); // connected by default or establishes connection as page loads up.
-    // const socket = io({ autoConnect: false });
-    /*
-        autoConnect is set to false so the connection is not established right away. 
-        We will manually call socket.connect() later, once the user has selected a username.
+    // const socket = io();    // connects by default 
+    const socket = io({ autoConnect: false });  // connects when `socket.connect()` is hit
 
-        // const socket = io(URL, { autoConnect: false }); // This an incorrect code?? 
-    */
+    // catch all events
+    socket.onAny((event, ...args)=>{
+        console.log('Disable this in prod.\n', event, args);
+    });
 
     // When you connect
     socket.on('new-connection', newConnection);
@@ -34,6 +33,9 @@
 
     // When you receive a text message
     socket.on('chat-response', chatResponse);
+
+    // when someone disconnects
+    socket.on('disconnect-message', userLeft);
 
     
     // Function When you connect
@@ -63,6 +65,17 @@
         // console.log(response);
         display_received_msg(response);
     }
+    // Function for When a user disconnects
+    function userLeft(response){
+        guest_initialization_data = {...response};
+        console.log('Guest Data', guest_initialization_data);
+
+        display_connection_msg({
+            userName: response.user_data.userInfo.userName,
+            text: response.message,
+            messageTimestamp: currentTime(),
+        });
+    }
 
 // SOCKET EVENT HANDLERS END
 
@@ -70,10 +83,32 @@
 
 // Other Important Functions    
 
-    document.getElementById("header-msgr-title").innerHTML = `Welcome to your chatroom `;
+    // document.getElementById("header-msgr-title").innerHTML = `Welcome to <b>Open</b> chatroom `;
 
     document.addEventListener('click', send_message);
     document.addEventListener('keyup', send_message);
+
+    document.getElementById('join-chatroom').addEventListener('click', startConnection);
+    document.getElementById('leave-chatroom').addEventListener('click', endConnection);
+
+
+    // function to START connection
+    function startConnection(event){
+        socket.connect();
+
+        document.getElementById('join-chatroom').hidden = true;
+        document.getElementById('leave-chatroom').hidden = false;
+        // if(socket.connected){}
+    }
+
+    // function to END connection
+    function endConnection(event){
+        socket.disconnect();
+
+        document.getElementById('join-chatroom').hidden = false;
+        document.getElementById('leave-chatroom').hidden = true;
+        // if(socket.connected){}
+    }
 
     // Send message to server/user
     function send_message(event){
@@ -87,7 +122,7 @@
 
             // If its a keyup event and its not the Enter key, return false
             if(event.type == "keyup" && event.key !== "Enter"){
-                console.log(event.type, event.key);
+                // console.log(event.type, event.key);
                 return false;
             }
 

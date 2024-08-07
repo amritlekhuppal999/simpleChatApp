@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 import path from 'path';
 
-import {ROOT_DIR, database_name, DB_CONNECTION_STRING} from '../globals.js';
+import {ROOT_DIR, database_name, DB_CONNECTION_STRING, hashPassword} from '../globals.js';
 
 // Login Controller for users
 async function userRegister(req, res){
@@ -27,7 +27,7 @@ async function userRegister(req, res){
             return false;
         }
 
-        // insert user
+        // INSERT USER
         const result = await InsertUser(req.body, client);
         // console.log(result);
         if(result.acknowledged && result.insertedId){
@@ -65,13 +65,16 @@ async function userRegister(req, res){
     // server_response.redirect('home')
 }
 
-
+// function to insert user 
 async function InsertUser(insertData, mongo_client){
     
-    const database = mongo_client.db(dbName);
+    const database = mongo_client.db(database_name);
     const collection_users = database.collection("users");
 
     // console.log(database, collection_users);
+
+    // Hash password
+    let user_password = await hashPassword(insertData.password);
 
     // insert document
     const user_data = {
@@ -79,7 +82,7 @@ async function InsertUser(insertData, mongo_client){
         username: insertData.userEmail,  // Username
         name: insertData.userFullName,
         email: insertData.userEmail,  // Email address
-        password: insertData.password,  // Hashed password
+        password: user_password,  // Hashed password
         profile_picture_url: "",  // Optional profile picture URL
         status: "available",   // deleted
         active: "",    // Online/offline status
@@ -104,10 +107,10 @@ async function InsertUser(insertData, mongo_client){
     return result;
 }
 
-
+// function to check if a particular user exists
 async function ifUserExists(insertData, mongo_client){
 
-    const database = mongo_client.db(dbName);
+    const database = mongo_client.db(database_name);
     const collection_users = database.collection("users");
 
     const query = {

@@ -28,46 +28,84 @@
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                    with font-awesome or any other icon font library -->
-                <li class="nav-item has-treeview menu-open">
-                    <a href="#" class="nav-link active">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>
-                        Your Chatrooms
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                    </a>
-                    <ul class="nav nav-treeview">
+                    
+                    <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                    
+                    <!-- Chatrooms -->
+                    <li class="nav-item has-treeview menu-open">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-users" style="color:rgb(231, 190, 9)"></i>
+                            <p>
+                                Chatrooms
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+                            <!-- Create New Chatroom -->
+                            <li class="nav-item">
+                                <a href="create-chatroom" class="nav-link">
+                                    <i class="fas fa-plus nav-icon"></i>
+                                    <p>New</p>
+                                </a>
+                            </li>
+
+                            <!-- Open Chat -->
+                            <li class="nav-item">
+                                <a href="chatroom" class="nav-link"> <!--active-->
+                                    <i class="fas fa-comment-dots nav-icon"></i>
+                                    <p>Open Chat</p>
+                                </a>
+                            </li>
+
+                            <!-- <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Inactive Page</p>
+                                </a>
+                            </li> -->
+                        </ul>
+                    </li>
+
+                    <!-- Friends -->
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-user-friends" style="color:rgb(9, 231, 28)"></i>
+                            <p>
+                                Friends
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+
+                        <!-- Inactive page -->
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-user nav-icon"></i>
+                                    <p>Inactive User</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Sample Link -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>New</p>
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Simple Link
+                                <span class="right badge badge-danger">New</span>
+                            </p>
                         </a>
                     </li>
+
+                    <!-- Logout -->
                     <li class="nav-item">
-                        <a href="chatroom" class="nav-link active">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Chatroom 1</p>
+                        <a href="logout" class="nav-link">
+                            <i class="nav-icon fas fa-sign-out-alt"></i>
+                            <p> Logout </p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Inactive Page</p>
-                        </a>
-                    </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>
-                        Simple Link
-                        <span class="right badge badge-danger">New</span>
-                    </p>
-                    </a>
-                </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

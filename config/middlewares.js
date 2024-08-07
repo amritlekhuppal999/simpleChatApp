@@ -19,8 +19,10 @@ const sessionMiddleware = session({
 
 // Get route URL
 function getURL(req, res, next){
+    // for debug purposes, it will simply print the url 
     console.log(`Request URL: ${req.url}`);
     next();
+    
 }
 
 // return page 404 Not found
