@@ -30,6 +30,7 @@ async function userLogin(client_request, server_response){
         }
 
         // console.log(user_detail)
+        // console.log(user_detail._id.toString())
 
         let saved_password = user_detail.password;  // saved password
         const password_match = await checkHashedPassword(userPassword, saved_password);   // boolean(true/false) on password match        
@@ -43,7 +44,8 @@ async function userLogin(client_request, server_response){
 
         // set session
         client_request.session.user = {
-            _id: null,
+            // _id: null,
+            user_id: user_detail._id.toString(),
             name: user_detail.name,
             username: user_detail.email,
             email: user_detail.email,

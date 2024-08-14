@@ -1,4 +1,4 @@
 node_modules
 .env
-how-to
-mongo-how-to.md
+public/how-to
+public/Design Documentation

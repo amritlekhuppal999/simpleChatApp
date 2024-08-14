@@ -6,6 +6,16 @@ export default function socketHandler(io){
     // IO middleware injected with session middleware
     io.engine.use(sessionMiddleware);
 
+    // Session Expired Middleware
+    // io.use((socket, next)=>{
+    //     let sessions = socket.request.session;
+        
+    //     if(sessions.user){
+    //         next();
+    //     }
+    //     else console.log("Session Expired!!");
+    // });
+
     let initialization_data = {
         userInfo: {
             user_id: '',
@@ -29,23 +39,40 @@ export default function socketHandler(io){
     io.on('connection', (socket) => {
         // socket: its the individual socket
         
-        console.log('New WS connection');
-        
-        const socketId = socket.id;
         let sessions = socket.request.session;  // access the express session data 
+        console.log('Session Id:', socket.handshake.query.sessionId);
 
-        if(sessions.user){
-
-            initialization_data.userInfo.user_id = null;
-            initialization_data.userInfo.userName = sessions.user.name ? sessions.user.name : 'jgfgh';
-            initialization_data.userInfo.email = sessions.user.email ? sessions.user.email : 'uydbh@gmail767.com';
-            initialization_data.userInfo.device = '';
-            
-            initialization_data.metaData.sessionExpiry = sessions.cookie.expires;
-
-            // User Table to manage active users
-            users[socketId] = sessions.user;
+        // check if the user is active
+        if(!sessions.user){
+            console.log('Session Expired...');
+            socket.emit('sessionExpired', 'Your session has expired. Disconnecting...');
+            socket.disconnect(true); // Disconnect the socket
+            return false;
         }
+
+        // check if the user is active (USING EVENTS)
+        // socket.on('checkSession', ()=>{
+        //     if(!sessions.user){
+        //         console.log('Session Expired...');
+        //         socket.emit('sessionExpired', 'Your session has expired. Disconnecting...');
+        //         socket.disconnect(true); // Disconnect the socket
+        //         return false;    
+        //     }
+        // }); 
+
+        console.log('New WS connection');
+        const socketId = socket.id;
+
+        // initialization data
+        initialization_data.userInfo.user_id = null;
+        initialization_data.userInfo.userName = sessions.user.name ? sessions.user.name : 'jgfgh';
+        initialization_data.userInfo.email = sessions.user.email ? sessions.user.email : 'uydbh@gmail767.com';
+        initialization_data.userInfo.device = '';
+        
+        initialization_data.metaData.sessionExpiry = sessions.cookie.expires;
+
+        // User Table to manage active users
+        users[socketId] = sessions.user;
 
         // console.log('user array:', users);
         // console.log('sessions:', sessions);
@@ -94,3 +121,25 @@ export default function socketHandler(io){
 
     socket is reference to the individual sockets connected. (working on this info)
 */
+
+
+
+    function user_init_data(){
+        let initialization_data = {
+            userInfo: {
+                user_id: '',
+                userName: '',
+                profileImg:'',
+                email: '',
+            },
+    
+            metaData:{
+                socket_id: '',
+                device: '',
+                connection_timestamp: '',
+                connection_message: ''
+            }
+        };
+
+        return initialization_data;
+    }

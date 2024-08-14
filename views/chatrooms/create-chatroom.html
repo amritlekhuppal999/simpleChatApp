@@ -1,0 +1,120 @@
+<style>
+    /* .fs_smaller{
+        font-size: smaller;
+    }
+    .whatsapp_chat_grey{
+        background-color: #202c33;
+    }
+
+    .whatsapp_chat_green{
+        background-color: #005c4b;
+    } */
+
+    #chatroom-privacy{
+        /* display: block!important; */
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css">
+
+<div class="content-wrapper">
+    
+    <!-- Content Header (Page header) -->
+    <!-- <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-1">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Create New Chatroom</h1>
+                </div>
+
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Create Chatroom</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <br />
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                     
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Create New Chatroom</h3>
+                        </div>
+                        
+                        <!-- form start -->
+                        <form role="form">
+                            <div class="card-body">
+                                
+                                <!-- Chatroom Name -->
+                                <div class="form-group">
+                                    <label for="chatroom-name">Name</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="chatroom-name" 
+                                        placeholder="Enter a name for the chatroom"
+                                        required
+                                    />
+                                </div>
+
+                                <!-- Description -->
+                                <div class="form-group">
+                                    <label for="chatroom-description">Description</label>
+                                    <!-- <input type="text" class="form-control" id="chatroom-description" placeholder="Enter a Name for chatroom"> -->
+                                    <textarea 
+                                        name="chatroom-description" 
+                                        id="chatroom-description" 
+                                        class="form-control" 
+                                        rows="5"></textarea>
+                                </div>
+
+                                <!-- Privacy Control -->
+                                <div class="form-group">
+                                    <label for="chatroom-privacy" style="display: block;">Privacy</label>
+                                    <select name="chatroom-privacy" id="chatroom-privacy" class="selectpicker" required>
+                                        <option value="0">Select</option>
+                                        <option value="1">Open</option>
+                                        <option value="2">Members Only</option>
+                                    </select>
+                                </div>
+
+                                <!-- Some Checkbox -->
+                                <!-- <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                </div> -->
+                            </div>
+                            
+                            <!-- Submit BTN -->
+                            <div class="card-footer">
+                                <button 
+                                    type="submit" 
+                                    id="submit-btn" 
+                                    class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+<script src="/js/create-chatroom.js"></script>
+
+

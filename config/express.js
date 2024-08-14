@@ -7,10 +7,12 @@ import {ROOT_DIR, renderViews} from '../globals.js';
 import * as Views from './route-handler.js';
 import * as Middlewares from './middlewares.js';
 
-import isAuthenticated from '../controllers/isAuthenticated.js';
+import {isAuthenticated, checkLogin} from '../controllers/isAuthenticated.js';
 import logoutController from '../controllers/logout-controller.js';
 import {userLogin, dummyLogin} from '../controllers/login-controller.js';
 import {userRegister} from '../controllers/register-controller.js';
+
+import * as chatroomControllers from '../controllers/chatroom/chatroom-controllers.js';
 
 const PORT = process.env.PORT;
 const APP_NAME = process.env.APP_NAME;
@@ -40,14 +42,17 @@ app.use(Middlewares.sessionMiddleware);
     app.get('/', isAuthenticated, Views.getHomepage);
     app.get('/home', isAuthenticated, Views.getHomepage);
 
-    //Chatroom
+    // Chatroom
     app.get('/chatroom', isAuthenticated, Views.getChatroom);
     app.get('/chatroom-old', Views.getOldChatroom);
     app.get('/chatroom-ui-demo', Views.getOldChatroomUI);
 
+    // Create Chatroom
+    app.get('/create-chatroom', isAuthenticated, Views.getCreateChatroom);
+
     // Login, Register, Forgot-Password
-    app.get('/login', Views.getLoginPage);
-    app.get('/register', Views.getRegisterPage);
+    app.get('/login', checkLogin, Views.getLoginPage);
+    app.get('/register', checkLogin, Views.getRegisterPage);
     app.get('/forgot-password', Views.getRecoverPasswordPage);
 
     // About Me
@@ -60,6 +65,9 @@ app.use(Middlewares.sessionMiddleware);
     app.get('/dummy-login', dummyLogin);
     
     app.post('/login-user', userLogin);
+
+    // create chatroom
+    app.post('/create-chatroom', chatroomControllers.createNewChatroom);
     
     // Register User
     app.post('/register-user', userRegister);

@@ -1,5 +1,5 @@
 import path from 'path';
-import {ROOT_DIR, renderViews} from '../globals.js';
+import {ROOT_DIR, renderViews, generate_CSRF_Token} from '../globals.js';
 const APP_NAME = process.env.APP_NAME;
 
 // Homepage
@@ -39,6 +39,22 @@ function getOldChatroomUI(client_request, server_response){
         server_response.sendFile(return_view)
 }
 
+
+// Create New Chatroom VIEW
+function getCreateChatroom(client_request, server_response){
+    // let return_view = path.join(ROOT_DIR, 'views', 'chatrooms', 'create-chatroom.html');
+    let page_data = {
+        page: path.join('chatrooms', 'create-chatroom.html'),
+        page_title: `${APP_NAME} | Create New Chatroom`,
+        page_css: [],
+        page_scripts: [],
+        user_data: client_request.session.user ?  client_request.session.user : false,
+        csrf_token: generate_CSRF_Token()
+    };
+    let return_view = renderViews(page_data);
+    server_response.send(return_view);
+}
+
 // Login Page
 function getLoginPage(client_request, server_response){
     let return_view = path.join(ROOT_DIR, 'views', 'login.html');
@@ -76,6 +92,7 @@ function getAboutMe(client_request, server_response){
 export {
     getHomepage,
     getChatroom, getOldChatroom, getOldChatroomUI,
+    getCreateChatroom,
     getLoginPage, 
     getRegisterPage,
     getRecoverPasswordPage,

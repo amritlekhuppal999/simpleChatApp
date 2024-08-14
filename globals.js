@@ -69,12 +69,18 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
         const content = readFile(path.join(ROOT_DIR, 'views', page_data.page));
 
         let user_info_section = '';
+        let csrf_token_ele = '';
+
         if(page_data.user_data){
             user_info_section = `
                 <input type="hidden" id="user_id" value="${page_data.user_data.user_id}" />
                 <input type="hidden" id="name" value="${page_data.user_data.name}" />
                 <input type="hidden" id="user_email" value="${page_data.user_data.email}" />
             `;
+        } 
+
+        if(page_data.csrf_token){
+            csrf_token_ele = `<input type="hidden" id="csrf_token" value="${page_data.csrf_token}" />`;
         } 
         
         return `<!DOCTYPE html>
@@ -85,10 +91,13 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
                 </head>
                 <body class="hold-transition sidebar-mini layout-fixed">
                     ${user_info_section}
+                    ${csrf_token_ele}
                     <div class="wrapper">
 
                         ${navbar} ${sidebar} 
+
                         ${content} 
+
                         ${control_sidebar} ${footer}
 
                     </div>
@@ -99,6 +108,11 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
     };
 // Function to include HTML parts END
 
+// Function to generate a CSRF token
+    function generate_CSRF_Token(){
+        return 'XABC123546';
+    }
+// Function to generate a CSRF token END
 
 // function to return current time
     function currentTime(){
@@ -112,6 +126,23 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
     }
 // function to return current time END    
 
+// function to get current date
+    function currentDate(){
+        // Get the current date
+        const now = new Date();
+
+        // Extract day, month, and year
+        const day = String(now.getDate()).padStart(2, '0'); // Ensures two digits
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed (0 = January, 11 = December)
+        const year = now.getFullYear();
+
+        // Format the date as day-month-year
+        const formattedDate = `${day}-${month}-${year}`;
+
+        return formattedDate;
+    }
+// function to get current date END
+
 export {
     ROOT_DIR,
     database_name,
@@ -119,5 +150,6 @@ export {
     hashPassword, checkHashedPassword,
     return_page_views,
     renderViews,
-    currentTime
+    generate_CSRF_Token,
+    currentTime, currentDate
 };

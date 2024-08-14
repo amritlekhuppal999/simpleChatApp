@@ -33,10 +33,11 @@ async function userRegister(req, res){
         if(result.acknowledged && result.insertedId){
             console.log("User successfully inserted with insert ID: "+result.insertedId);
             // res.send("Registration Successful.");
-
+            
             // set session
             req.session.user = {
-                _id: null,
+                // _id: null,
+                user_id: result.insertedId.toString(),
                 name: req.body.userFullName,
                 username: req.body.userEmail,
                 email: req.body.userEmail,
