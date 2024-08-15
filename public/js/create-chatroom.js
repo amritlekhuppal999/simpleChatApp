@@ -1,12 +1,15 @@
 
 
-
-window.onload = ()=>{
-
+/*
+    window.onload = ()=>{
+        // Only one function can be assigned to the onload handler. Hence only the last definition will work.
+        // Since I have window.onload defined elsewhere, this will not work
+    }
+*/
 
     $('#chatroom-privacy').selectpicker();
 
-    
+
     document.getElementById('submit-btn').addEventListener('click', event=>{
         event.preventDefault();
         
@@ -47,11 +50,11 @@ window.onload = ()=>{
                 chatroom_privacy : chatroom_privacy.value,
                 csrf_token: csrf_token.value
             };
-    
+
             console.log(form_data);
-    
+
             // return false;
-    
+
             const request_options = {
                 method: 'POST',
                 headers: {
@@ -59,9 +62,9 @@ window.onload = ()=>{
                 },
                 body: JSON.stringify(form_data)
             };
-    
-            let url = 'create-chatroom';
-    
+
+            let url = '/create-chatroom';
+
             try{
                 let response = await fetch(url, request_options);
                 // console.log(response);
@@ -75,7 +78,8 @@ window.onload = ()=>{
                 else {
                     toastr.success(response_data.message);
                     // submit_btn.innerHTML = submit_btn_cont;
-                    submit_btn.remove();
+                    submit_btn.remove(); 
+                    // return false;
                     setTimeout(() => {
                         location.reload()
                         // window.location.href = home_url;
@@ -87,5 +91,3 @@ window.onload = ()=>{
             }
         }
     });
-
-}

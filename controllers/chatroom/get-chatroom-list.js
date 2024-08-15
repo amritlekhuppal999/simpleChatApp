@@ -4,13 +4,11 @@ import { MongoClient } from 'mongodb';
 import { ROOT_DIR, database_name, currentDate, DB_CONNECTION_STRING } from '../../globals.js';
 
 
-async function createNewChatroom(requested, response){
+async function getChatroomList(requested, response){
     
-    console.log(requested.body);
-
     const client = new MongoClient(DB_CONNECTION_STRING);
 
-    let {chatroom_name, chatroom_description, chatroom_privacy, csrf_token} = requested.body;
+    // let {chatroom_name, chatroom_description, chatroom_privacy, csrf_token} = requested.body;
 
     const user_id = requested.session.user.user_id;
 
@@ -20,38 +18,39 @@ async function createNewChatroom(requested, response){
         const database = client.db(database_name);
         const collection_chatrooms = database.collection("chatrooms");
 
-        const chatroom_data = {
-            name: chatroom_name,
-            description: chatroom_description,  // Email address
-            privacy: chatroom_privacy,  // Hashed password
-            admin_id: [user_id],
-            member_id: [user_id],
-            status: "active",   // deleted,
-            date_created: currentDate()
+        // username or email
+        const query = {
+            member_id: user_id
         };
 
-        // Insert Operation
-        const result = await collection_chatrooms.insertOne(chatroom_data);
-        // return result;
+        // options.. not needed herer
 
-        if(result.acknowledged && result.insertedId){
-            console.log("Chatroom created successfully with insert ID: "+result.insertedId);
+        const chatrooms = await collection_chatrooms.find(query).toArray();
+        const chatroomCount = await collection_chatrooms.countDocuments(query);
+        // return chatrooms;
+        
+        console.log(chatrooms);
+        
+        if(chatrooms){
             
-            // return response
-            // server_response.redirect('home');
             response.send({
-                message: 'Chatroom created successfully.',
+                message: '',
                 error_code: 0,
+                data: {
+                    chatroom_data: chatrooms, 
+                    record_count: chatroomCount
+                },
                 redirect: true,
                 page: ''
             });
         }
         else {
-            console.log("Chatroom creation failed.");
+            console.log("No Chatroom records were found");
             // res.status(500).send("User registration failed.");
             response.send({
-                message: 'Unable to create new chatroom at the moment. Try again later.',
+                message: '',
                 error_code: 2,
+                data: null,
                 redirect: false,
                 page: ''
             });
@@ -60,11 +59,12 @@ async function createNewChatroom(requested, response){
 
     } 
     catch (error) {
-        console.error(error, "Chatroom creation failed.");
+        console.error(error, "Chatroom fetch opeation failed.");
         // server_response.redirect('login?err_msg=Something went Wrong. Try again later.');
         response.send({
             message: 'Something went wrong, Try again later.',
             error_code: 1,
+            data: null,
             redirect: false,
             page: ''
         });
@@ -72,12 +72,10 @@ async function createNewChatroom(requested, response){
     finally{
         client.close();
     }
-
-
-    
 }
 
 
+
 export {
-    createNewChatroom
-};
+    getChatroomList
+}

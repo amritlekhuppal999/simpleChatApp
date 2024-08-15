@@ -42,8 +42,11 @@ app.use(Middlewares.sessionMiddleware);
     app.get('/', isAuthenticated, Views.getHomepage);
     app.get('/home', isAuthenticated, Views.getHomepage);
 
-    // Chatroom
+    // Chatroom Views
     app.get('/chatroom', isAuthenticated, Views.getChatroom);
+    app.get('/chatroom/:room_id', isAuthenticated, Views.getChatroom);
+    
+    // OLD Chatroom View
     app.get('/chatroom-old', Views.getOldChatroom);
     app.get('/chatroom-ui-demo', Views.getOldChatroomUI);
 
@@ -68,6 +71,9 @@ app.use(Middlewares.sessionMiddleware);
 
     // create chatroom
     app.post('/create-chatroom', chatroomControllers.createNewChatroom);
+
+    // get chatroom list
+    app.get('/get-chatroom-list', chatroomControllers.getChatroomList);
     
     // Register User
     app.post('/register-user', userRegister);
