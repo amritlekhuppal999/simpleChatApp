@@ -7,17 +7,6 @@ window.onload = ()=>{
     LoadChatrooms();
 
     async function LoadChatrooms(){
-        // let form_data = {
-        //     chatroom_name : chatroom_name.value,
-        //     chatroom_description : chatroom_description.value,
-        //     chatroom_privacy : chatroom_privacy.value,
-        //     csrf_token: csrf_token.value
-        // };
-
-        // console.log(form_data);
-
-        // return false;
-
         const request_options = {
             method: 'GET',
             // headers: {

@@ -20,6 +20,7 @@ const EXCLAMATION_DANGER = '<i class="fas fa-exclamation-triangle" style="color:
 
     function getPageURL(){      // Get Page URL
         return new URL(window.location.href);
+        // return window.location.href;
     }
     function urlParamObject(url){       //GET URL PARAM OBJECT
         return new URLSearchParams(url.search);

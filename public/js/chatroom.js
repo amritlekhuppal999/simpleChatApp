@@ -279,6 +279,18 @@
 
 
 
+    
+
+    console.log(window.initialData.room_id);
+
+
+
+
+
+
+
+
+
 // UI CREDITS
     console.log("UI from:", "\nhttps://adminlte.io/");
 // UI CREDITS END

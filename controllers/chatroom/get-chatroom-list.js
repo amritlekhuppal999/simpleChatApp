@@ -29,7 +29,7 @@ async function getChatroomList(requested, response){
         const chatroomCount = await collection_chatrooms.countDocuments(query);
         // return chatrooms;
         
-        console.log(chatrooms);
+        // console.log(chatrooms);
         
         if(chatrooms){
             

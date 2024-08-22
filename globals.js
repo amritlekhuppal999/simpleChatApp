@@ -67,21 +67,29 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
         const scripts = readFile(path.join(LAYOUT, 'scripts.html'));
         
         const content = readFile(path.join(ROOT_DIR, 'views', page_data.page));
+        
+        // let query_params = 'sss';
+        let query_params = page_data.query_params;
+        let initialization_data = {};
 
-        let user_info_section = '';
-        let csrf_token_ele = '';
+        console.log(page_data); //return false;
+
+        if(query_params && query_params.room_id){
+            // room_id = query_params.room_id;
+            initialization_data.room_id = query_params.room_id;
+        }
 
         if(page_data.user_data){
-            user_info_section = `
-                <input type="hidden" id="user_id" value="${page_data.user_data.user_id}" />
-                <input type="hidden" id="name" value="${page_data.user_data.name}" />
-                <input type="hidden" id="user_email" value="${page_data.user_data.email}" />
-            `;
+            initialization_data.user_id = page_data.user_data.user_id;
+            initialization_data.name = page_data.user_data.name;
+            initialization_data.user_email = page_data.user_data.email;
         } 
 
         if(page_data.csrf_token){
-            csrf_token_ele = `<input type="hidden" id="csrf_token" value="${page_data.csrf_token}" />`;
+            // csrf_token_ele = `<input type="hidden" id="csrf_token" value="${page_data.csrf_token}" />`;
+            initialization_data.csrf_token = page_data.csrf_token;
         } 
+
         
         return `<!DOCTYPE html>
             <html lang="en">
@@ -90,8 +98,6 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
                     ${header}
                 </head>
                 <body class="hold-transition sidebar-mini layout-fixed">
-                    ${user_info_section}
-                    ${csrf_token_ele}
                     <div class="wrapper">
 
                         ${navbar} ${sidebar} 
@@ -103,6 +109,10 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
                     </div>
 
                     ${scripts}
+
+                    <script>
+                        window.initialData = ${JSON.stringify(initialization_data)}
+                    </script>
                 </body>
             </html>`;
     };

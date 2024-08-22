@@ -23,8 +23,12 @@ function getChatroom(client_request, server_response){
         page_title: `${APP_NAME} | Chatroom`,
         page_css: [],
         page_scripts: [],
-        user_data: client_request.session.user ?  client_request.session.user : false
+        user_data: client_request.session.user ?  client_request.session.user : false,
+        query_params: {
+            room_id: client_request.params.room_id,
+        }
     };
+    console.log(client_request.params.room_id);
     let return_view = renderViews(page_data);
     server_response.send(return_view);
 }
