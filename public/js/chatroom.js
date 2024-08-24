@@ -3,6 +3,7 @@
 // window.onload = ()=>{}
 
     adjustChatWindowHeight();
+    getChatroomDetails();
 
     // Your data
     let client_initialization_data = {};
@@ -106,7 +107,7 @@
     document.addEventListener('click', send_message);
     document.addEventListener('keyup', send_message);
 
-    document.getElementById('join-chatroom').addEventListener('click', startConnection);
+    document.getElementById('join-chatroom-btn').addEventListener('click', startConnection);
     document.getElementById('leave-chatroom').addEventListener('click', endConnection);
 
 
@@ -114,18 +115,27 @@
     function startConnection(event){
         socket.connect();
 
-        document.getElementById('join-chatroom').hidden = true;
+        document.getElementById('join-chatroom-btn').hidden = true;
         document.getElementById('leave-chatroom').hidden = false;
+        
+        document.getElementById('chat-window').hidden = false;
+        document.getElementById('chat-settings-window').hidden = true;
+
         // if(socket.connected){}
         // toastr.success("You joined the chatroom")
+
     }
 
     // function to END connection
     function endConnection(event){
         socket.disconnect();
 
-        document.getElementById('join-chatroom').hidden = false;
+        document.getElementById('join-chatroom-btn').hidden = false;
         document.getElementById('leave-chatroom').hidden = true;
+
+        document.getElementById('chat-window').hidden = true;
+        document.getElementById('chat-settings-window').hidden = false;
+
         // if(socket.connected){}
 
         toastr.error("You left the chatroom")
@@ -267,6 +277,44 @@
         chatWindowEle.style.height = '58vh';
         if(screenHeight >= 1080){
             chatWindowEle.style.height = '72vh';
+        }
+    }
+
+    // fetch chatroom details
+    async function getChatroomDetails(){
+
+        const chatroom_name_field = document.getElementById('chatroom-name-field');
+        chatroom_name_field.innerHTML = LOADER_SMALL;
+
+        const request_options = {
+            method: 'GET',
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // },
+            // body: JSON.stringify({
+            //     room_id: window.initialData.room_id
+            // })
+        };
+
+        let url = '/get-chatroom-details?room_id='+window.initialData.room_id;
+
+        try{
+            let response = await fetch(url, request_options);
+            // console.log(response);
+            let response_data = await response.json();
+            // console.log('Response:', response_data);
+            if(response_data.error_code){
+                toastr.error(response_data.message);
+                chatroom_name_field.innerHTML = LOADER_SMALL;
+            }
+            else {
+                toastr.success(response_data.message);
+                let chatroom_name = response_data.data.chatroom_data.name;
+                chatroom_name_field.innerHTML = chatroom_name;
+            }
+        }
+        catch(error){
+            console.error('Error:', error);
         }
     }
 

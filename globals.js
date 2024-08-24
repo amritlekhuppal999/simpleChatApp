@@ -72,7 +72,7 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
         let query_params = page_data.query_params;
         let initialization_data = {};
 
-        console.log(page_data); //return false;
+        // console.log(page_data); //return false;
 
         if(query_params && query_params.room_id){
             // room_id = query_params.room_id;

@@ -60,7 +60,11 @@ app.use(Middlewares.sessionMiddleware);
 
     // About Me
     app.get('/about-me', Views.getAboutMe);
+
+    
 // VIEWS END
+
+
 
 // CONTROLLERS
     
@@ -69,18 +73,25 @@ app.use(Middlewares.sessionMiddleware);
     
     app.post('/login-user', userLogin);
 
-    // create chatroom
-    app.post('/create-chatroom', chatroomControllers.createNewChatroom);
-
-    // get chatroom list
-    app.get('/get-chatroom-list', chatroomControllers.getChatroomList);
-    
     // Register User
     app.post('/register-user', userRegister);
 
     // Logout
     app.get('/logout', logoutController);
-// CONTROLLERS
+
+
+
+    // create chatroom
+    app.post('/create-chatroom', chatroomControllers.createNewChatroom);
+
+    // get chatroom list
+    app.get('/get-chatroom-list', chatroomControllers.getChatroomList);
+
+    // get chatroom details
+    app.get('/get-chatroom-details', chatroomControllers.getChatroomDetails);
+    
+    
+// CONTROLLERS END
 
 
 // 404 Page Not Found MIDDLEWARE
