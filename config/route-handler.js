@@ -25,7 +25,7 @@ function getChatroom(client_request, server_response){
         page_scripts: [],
         user_data: client_request.session.user ?  client_request.session.user : false,
         query_params: {
-            room_id: client_request.params.room_id,
+            room_id: client_request.params.room_id ? client_request.params.room_id : null,
         }
     };
     console.log(client_request.params.room_id);

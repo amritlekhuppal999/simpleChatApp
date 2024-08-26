@@ -4,9 +4,9 @@
 
     
     // Your data
-    let USER_DATA = {};
+    let client_initialization_data = {};
     // Guest Data
-    let GUEST_USER_DATA = {};
+    let guest_initialization_data = {};
 
     // Chatroom ID
     const CHAT_ROOM_ID = window.initialData.room_id;
@@ -56,23 +56,15 @@
 
     // when someone disconnects
     socket.on('disconnect-message', userLeft);
-    
-    // get active users in a chatroom
-    socket.on('joinedRoom', (response)=>{
-        // event to fetch Active Users of a given chatroom
-        socket.emit("fetchActiveUsers", response);
-    });
-    
-    // get active users in a chatroom
-    socket.on('getActiveUsers', displayActiveUsers);
 
+    
     // Function When you connect
     function newConnection(response){
-        USER_DATA = {...response};
-        console.log('Your Data', USER_DATA)
+        client_initialization_data = {...response};
+        console.log('Your Data', client_initialization_data)
 
         display_connection_msg({
-            userName: response.username,
+            userName: response.userInfo.userName,
             text: response.metaData.connection_message,
             messageTimestamp: response.metaData.connection_timestamp,
         })
@@ -81,18 +73,16 @@
     }
     // Function for When someone else connects
     function newUser(response){
-        GUEST_USER_DATA = {...response};
-        console.log('Guest Data', GUEST_USER_DATA);
+        guest_initialization_data = {...response};
+        console.log('Guest Data', guest_initialization_data);
 
         display_connection_msg({
-            userName: response.username,
+            userName: response.userInfo.userName,
             text: response.metaData.connection_message,
             messageTimestamp: response.metaData.connection_timestamp,
         });
 
-        socket.emit("fetchActiveUsers", response);
-
-        toastr.info(`${response.username} joined the chat`)
+        toastr.info(`${response.userInfo.userName} joined the chat`)
     }
     // Function for When you receive a text message
     function chatResponse(response){
@@ -101,50 +91,16 @@
     }
     // Function for When a user disconnects
     function userLeft(response){
-        // GUEST_USER_DATA = {...response};
-        // console.log('Guest Data', GUEST_USER_DATA);
+        guest_initialization_data = {...response};
+        console.log('Guest Data', guest_initialization_data);
 
         display_connection_msg({
-            userName: response.username,
+            userName: response.user_data.userInfo.userName,
             text: response.message,
             messageTimestamp: currentTime(),
         });
 
-        toastr.warning(`${response.username} left the chat`)
-    }
-    // display users in a chatroom
-    function displayActiveUsers(response){
-        console.log(response)
-
-        let list_UI = '';
-
-        response.forEach(element => {
-            let meta_data = element.metaData;
-            let name = element.name;
-            let username = element.username;
-            let user_id = element.user_id;
-            let user_img = element.user_img ? element.user_img : "/AdminLTE/dist/img/user1-128x128.jpg";
-
-            list_UI += `
-                <li>
-                    <a href="#">
-                        <img class="contacts-list-img" src="${user_img}">
-
-                        <div class="contacts-list-info">
-                            <span class="contacts-list-name">
-                                ${name ? name : username}
-                                <small class="contacts-list-date float-right">${meta_data.connection_timestamp}</small>
-                            </span>
-                            <span class="contacts-list-msg">
-                                Lorem Ipsum
-                            </span>
-                        </div>
-                    </a>
-                </li>`;
-
-        });
-        
-        document.getElementById("active-user-list").innerHTML = list_UI;
+        toastr.warning(`${response.user_data.userInfo.userName} left the chat`)
     }
 // SOCKET EVENT HANDLERS END
 
@@ -162,13 +118,10 @@
 
     // function to START connection
     function startConnection(event){
-        socket.connect();   // this triggers `newConnection(response)` method
+        socket.connect();
 
         //JOIN CHATROOM
         socket.emit("joinRoom", CHAT_ROOM_NAME);
-        
-        // event to fetch Active Users of a given chatroom
-        socket.emit("fetchActiveUsers", CHAT_ROOM_NAME);
 
         document.getElementById('join-chatroom-btn').hidden = true;
         document.getElementById('leave-chatroom').hidden = false;
@@ -183,7 +136,7 @@
 
     // function to END connection
     function endConnection(event){
-
+        
         socket.emit("leaveRoom", CHAT_ROOM_NAME);
         socket.disconnect();
 
@@ -223,9 +176,7 @@
             }
 
             let message_body = {
-                room_id: CHAT_ROOM_ID,
-                room_name: CHAT_ROOM_NAME,
-                userName: USER_DATA.username,
+                userName: client_initialization_data.userInfo.userName,
                 text: text_message,
                 messageTimestamp: currentTime()
             };
@@ -327,7 +278,7 @@
         message_stream.appendChild(DIV);
         DIV.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
-
+    
     // adjusts the chat window height as per screen size...
     function adjustChatWindowHeight(){
         let screenHeight = window.screen.height;
@@ -339,7 +290,7 @@
         }
     }
 
-    // fetch chatroom details from DATABASE
+    // fetch chatroom details
     async function getChatroomDetails(){
 
         const chatroom_join_btn = document.getElementById('join-chatroom-btn');

@@ -61,7 +61,7 @@ app.use(Middlewares.sessionMiddleware);
     // About Me
     app.get('/about-me', Views.getAboutMe);
 
-    
+
 // VIEWS END
 
 
@@ -88,7 +88,7 @@ app.use(Middlewares.sessionMiddleware);
     app.get('/get-chatroom-list', chatroomControllers.getChatroomList);
 
     // get chatroom details
-    app.get('/get-chatroom-details', chatroomControllers.getChatroomDetails);
+    app.get('/get-chatroom-details/:room_id', chatroomControllers.getChatroomDetails);
     
     
 // CONTROLLERS END

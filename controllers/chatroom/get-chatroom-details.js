@@ -12,7 +12,10 @@ async function getChatroomDetails(requested, response){
 
     // const user_id = requested.session.user.user_id;
 
-    let {room_id} = requested.query;
+    // let {room_id} = requested.query;
+    // console.log("chatroom id: "+room_id)
+
+    let room_id = requested.params.room_id;
     // console.log("chatroom id: "+room_id)
 
     try {
