@@ -13,6 +13,7 @@ import {userLogin, dummyLogin} from '../controllers/login-controller.js';
 import {userRegister} from '../controllers/register-controller.js';
 
 import * as chatroomControllers from '../controllers/chatroom/chatroom-controllers.js';
+import * as friendsControllers from '../controllers/friends/friends-controllers.js';
 
 const PORT = process.env.PORT;
 const APP_NAME = process.env.APP_NAME;
@@ -43,7 +44,7 @@ app.use(Middlewares.sessionMiddleware);
     app.get('/home', isAuthenticated, Views.getHomepage);
 
     // Chatroom Views
-    app.get('/chatroom', isAuthenticated, Views.getChatroom);
+    // app.get('/chatroom', isAuthenticated, Views.getChatroom);
     app.get('/chatroom/:room_id', isAuthenticated, Views.getChatroom);
     
     // OLD Chatroom View
@@ -84,11 +85,19 @@ app.use(Middlewares.sessionMiddleware);
     // create chatroom
     app.post('/create-chatroom', chatroomControllers.createNewChatroom);
 
-    // get chatroom list
+    // get chatroom list where user is admin
     app.get('/get-chatroom-list', chatroomControllers.getChatroomList);
 
     // get chatroom details
     app.get('/get-chatroom-details/:room_id', chatroomControllers.getChatroomDetails);
+    
+    // get chatrooms that are available
+    app.get('/get-available-chatroom-list/:page', chatroomControllers.getAvailableChatroomDetails);
+
+
+
+    // get list of user friends
+    app.get('/get-friend-list/:page', friendsControllers.getFriendList);
     
     
 // CONTROLLERS END

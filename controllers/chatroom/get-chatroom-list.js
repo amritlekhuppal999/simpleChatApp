@@ -20,7 +20,7 @@ async function getChatroomList(requested, response){
 
         // username or email
         const query = {
-            member_id: user_id
+            admin_id: user_id
         };
 
         // options.. not needed herer

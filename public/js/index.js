@@ -2,11 +2,14 @@
 
 window.onload = ()=>{
 
-    let chatroom_list_ele = document.getElementById('chatroom-ul-ele');
+    
+    LoadChatroomList();
+    
+    // chatrooms list in the sidebar
+    async function LoadChatroomList(){
 
-    LoadChatrooms();
+        let chatroom_list_ele = document.getElementById('chatroom-ul-ele');
 
-    async function LoadChatrooms(){
         const request_options = {
             method: 'GET',
             // headers: {

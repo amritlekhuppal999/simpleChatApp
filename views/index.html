@@ -7,83 +7,271 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Starter Page</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Starter Page</li>
-            </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+            <div class="row ">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Starter Page</h1>
+                </div>
+                
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <!-- <li class="breadcrumb-item active">Starter Page</li> -->
+                    </ol>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
+    
 
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                <h5 class="card-title">Card title</h5>
 
-                <p class="card-text">
-                    Some quick example text to build on the card title and make up the bulk of the card's
-                    content.
-                </p>
+            <div class="row ">
+                
+                <!-- List of Chatrooms -->
+                <div class="col-md-7" >
+                    <div class="card card-default">
 
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                        <!-- card header -->
+                        <div class="card-header">
+                            <h3 class="card-title mt-1">
+                                <i class="fas fa-comment-dots"></i>
+                                Available Chatrooms
+                            </h3>
+
+                            <div class="card-tool" style="float:right;">
+                                <div class="input-group input-group-sm" style="min-width: 150px; width:252px;">
+                                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                
+                                    <div class="input-group-append">
+                                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- card body (loads available chatrooms here)--> 
+                        <div class="card-body" 
+                            id="available-chatrooms-section" 
+                            style="max-height: 64vh; overflow-y: auto;">
+
+                            <!-- <div class="callout callout-success">
+                                <h5>I am a success callout!</h5>
+                
+                                <p>This is a green callout.</p>
+                            </div> -->
+
+                            <!-- <div class="callout callout-success">
+                                <h5>I am a success callout!</h5>
+                
+                                <p>This is a green callout.</p>
+                            </div> -->
+                        </div>
+
+                        <!-- card footer (load more btn) -->
+                        <div class="card-footer">
+                            <input type="hidden" id="page-counter" value="0" />
+
+                            <a href="#" id="load-more-result-btn"> Load More + </a>
+                            <span id="loader-ele"></span>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- List of Friends -->
+                <div class="col-md-5">
+                    <div class="card">
+
+                        <!-- card header -->
+                        <div class="card-header">
+                            <h3 class="card-title mt-1">
+                                <i class="fas fa-user-friends" ></i>
+                                Friends
+                            </h3>
+                            
+                            <div class="card-tools">
+                                <span class="badge badge-danger">New Members</span>
+                                <!-- <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button> -->
+
+                                <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button> -->
+                            </div>
+                        </div>
+                        
+                        <!-- card body -->
+                        <div class="card-body p-0"  
+                            style="max-height: 64vh; overflow-y: auto;">
+                            
+                            <ul class="users-list clearfix" id="friends-section">
+                                <li>
+                                    <img src="/AdminLTE/dist/img/user1-128x128.jpg" alt="User Image">
+                                    <a class="users-list-name" href="#">Alexander Pierce</a>
+                                    <!-- <span class="users-list-date">Today</span> -->
+                                </li>
+                            </ul>
+
+                        </div>
+                        
+                        <!-- card footer -->
+                        <div class="card-footer text-center">
+                            <input type="hidden" id="friends-page-counter" value="0" />
+                            <a href="/friends">View All Friends</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="card card-primary card-outline">
-                <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-
-                <p class="card-text">
-                    Some quick example text to build on the card title and make up the bulk of the card's
-                    content.
-                </p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-                </div>
-            </div><!-- /.card -->
-            </div>
-            <!-- /.col-md-6 -->
-            <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header">
-                <h5 class="m-0">Featured</h5>
-                </div>
-                <div class="card-body">
-                <h6 class="card-title">Special title treatment</h6>
-
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-
-            <div class="card card-primary card-outline">
-                <div class="card-header">
-                <h5 class="m-0">Featured</h5>
-                </div>
-                <div class="card-body">
-                <h6 class="card-title">Special title treatment</h6>
-
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            </div>
-            <!-- /.col-md-6 -->
+            
+            
         </div>
-        <!-- /.row -->
-        </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content -->
+    
 </div>
+
+
+<script>
+    
+    /*
+        _id: new ObjectId('66bd4882c060fa688d58156c'),
+        name: 'Another Chatroom',
+        description: 'Just another chatroom',
+        privacy: '2',
+        admin_id: [ '66b272c0ee0f086c8fab2642' ],
+        member_id: [ '66b272c0ee0f086c8fab2642' ],
+        status: 'active',
+        date_created: '15-08-2024
+    */
+
+    // Load more records (Manual Lazy Loading )
+    document.getElementById('load-more-result-btn').addEventListener('click', event=>{
+        LoadAvailableChatrooms();
+    });
+    
+    
+    LoadAvailableChatrooms();
+    
+    // loads available chatrooms 
+    async function LoadAvailableChatrooms(){
+
+        let available_chatroom_list_ele = document.getElementById('available-chatrooms-section');
+        let page_counter = parseInt(document.getElementById('page-counter').value);
+
+        const request_options = {
+            method: 'GET',
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // },
+            // body: JSON.stringify(form_data)
+        };
+
+        let url = `/get-available-chatroom-list/${page_counter}`;
+
+        try{
+            let response = await fetch(url, request_options);
+            // console.log(response);
+            let response_data = await response.json();
+            // console.log('Response:', response_data);
+
+            if(!response_data.error_code){
+                // toastr.success(response_data.message);
+                response_data.data.chatroom_data.map((element, index)=>{
+                    // console.log(index, element);
+                    let DIV_ele = document.createElement('div');
+                    DIV_ele.classList.add("callout");
+                    DIV_ele.classList.add("callout-success");
+
+                    let collapse_btn = `<div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>`;
+                    collapse_btn = '';
+
+                    ``;
+
+                    DIV_ele.innerHTML = ` <h5> 
+                            <a href="/chatroom/${element._id}"> ${element.name} </a> 
+                        </h5>
+                        <p>${element.description}</p>`;
+
+                    available_chatroom_list_ele.appendChild(DIV_ele);
+
+                    DIV_ele.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                });
+
+                document.getElementById('page-counter').value = ++page_counter;
+            }
+            else {
+                // toastr.error(response_data.message);
+                console.error("Unable to load Available Chatroom ");
+                if(response_data.error_code === 3) {
+                    toastr.error(response_data.message);
+                }
+            }
+        }
+        catch(error){
+            console.error('Error:', error);
+        }
+    }
+
+    
+
+    LoadFriendList()
+
+    async function LoadFriendList(){
+
+        let friends_list_ele = document.getElementById('friends-section');
+        let page_counter = parseInt(document.getElementById('friends-page-counter').value);
+
+        const request_options = {
+            method: 'GET',
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // },
+            // body: JSON.stringify(form_data)
+        };
+
+        let url = `/get-friend-list/${page_counter}`;
+
+        try{
+            let response = await fetch(url, request_options);
+            // console.log(response);
+            let response_data = await response.json();
+            // console.log('Response:', response_data);
+
+            if(!response_data.error_code){
+                // toastr.success(response_data.message);
+                response_data.data.friend_data.map((element, index)=>{
+                    // console.log(index, element);
+                    let LI_ele = document.createElement('LI');
+
+                    LI_ele.innerHTML = ` <img src="${element.profile_picture_url}" alt="User Image">
+                        <a class="users-list-name" href="/user/${element._id}">${element.name}</a>
+                        <!-- <span class="users-list-date">Today</span> -->`;
+
+                    friends_list_ele.appendChild(LI_ele);
+
+                    LI_ele.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                });
+
+                document.getElementById('friends-page-counter').value = ++page_counter;
+            }
+            else {
+                // toastr.error(response_data.message);
+                console.error("Unable to load Friend List ");
+                if(response_data.error_code === 3) {
+                    toastr.error(response_data.message);
+                }
+            }
+        }
+        catch(error){
+            console.error('Error:', error);
+        }
+    }
+
+</script>
