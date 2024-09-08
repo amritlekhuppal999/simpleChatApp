@@ -1,0 +1,77 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row ">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Friend List</h1>
+                </div>
+                
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                        <li class="breadcrumb-item active">Friends</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+
+            <div class="row ">
+                
+                <!-- List of Friends -->
+                <div class="col-md-12">
+                    <div class="card">
+
+                        <!-- card header -->
+                        <div class="card-header">
+                            <h3 class="card-title mt-1">
+                                <i class="fas fa-user-friends" ></i>
+                                Friends
+                            </h3>
+                            
+                            <div class="card-tools">
+                                <!-- <span class="badge badge-danger">New Members</span> -->
+                                <div class="input-group input-group-sm" style="min-width: 150px; width:300px;">
+                                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                
+                                    <div class="input-group-append">
+                                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- card body -->
+                        <div class="card-body p-0">
+                            
+                            <ul class="users-list clearfix" id="friends-section">
+                                <!-- <li>
+                                    <img src="/AdminLTE/dist/img/user1-128x128.jpg" alt="User Image" height=128 width=128>
+                                    <a class="users-list-name" href="#">Alexander Pierce</a>
+                                    <span class="users-list-date">Today</span>
+                                </li> -->
+                            </ul>
+                        </div>
+                        
+                        <!-- card footer -->
+                        <div class="card-footer text-center">
+                            <input type="hidden" id="friends-page-counter" value="0" />
+                            <a href="#" id="load-more-friends">Load More</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    
+</div>
+
+<script defer src="/js/friends.js"></script>

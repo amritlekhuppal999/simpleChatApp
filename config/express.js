@@ -54,6 +54,9 @@ app.use(Middlewares.sessionMiddleware);
     // Create Chatroom
     app.get('/create-chatroom', isAuthenticated, Views.getCreateChatroom);
 
+    // Friends View
+    app.get('/friends', isAuthenticated, Views.getFriendsView);
+
     // Login, Register, Forgot-Password
     app.get('/login', checkLogin, Views.getLoginPage);
     app.get('/register', checkLogin, Views.getRegisterPage);
