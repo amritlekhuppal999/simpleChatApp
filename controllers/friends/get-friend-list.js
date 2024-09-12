@@ -11,6 +11,7 @@ async function getFriendList(requested, response){
     const user_id = requested.session.user.user_id;
 
     let page_counter = requested.params.page;
+    let search_keyword = requested.params.search_keyword || null;
 
     try {
         await client.connect();
@@ -22,10 +23,17 @@ async function getFriendList(requested, response){
             friend_list: {
                 $in: [user_id]
             },
+            // name: search_keyword
             // block_list:{
             //     $nin:[user_id]
             // }
         };
+
+        if(search_keyword){
+            query.name = {
+                $regex: search_keyword, $options: 'i'
+            }
+        }
 
         const pages = page_counter || 0;
         const records_per_page = 10;
@@ -64,7 +72,7 @@ async function getFriendList(requested, response){
                 console.log("No Friends records were found");
                 // res.status(500).send("User registration failed.");
                 response.send({
-                    message: 'Unable to fetch your friends.',
+                    message: 'No Friends available.',
                     error_code: 2,
                     data: null,
                     redirect: false,
@@ -79,7 +87,7 @@ async function getFriendList(requested, response){
             console.log("No more friends to load");
             // res.status(500).send("User registration failed.");
             response.send({
-                message: 'You wanted more??',
+                message: 'No more friends available.',
                 error_code: 3,
                 data: null,
                 redirect: false,

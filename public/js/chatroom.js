@@ -24,7 +24,7 @@
 
     // Gives access to the front end library of Socket.io
     // const socket = io();    // connects by default 
-    const socket = io({ autoConnect: false });  // connects when `socket.connect()` is hit
+    const socket = io("/chatroom",{ autoConnect: false });  // connects when `socket.connect()` is hit
 
     // catch all events
     // socket.onAny((event, ...args)=>{

@@ -23,7 +23,7 @@
         <div class="container-fluid">
 
             <div class="row ">
-                
+
                 <!-- List of Friends -->
                 <div class="col-md-12">
                     <div class="card">
@@ -38,18 +38,24 @@
                             <div class="card-tools">
                                 <!-- <span class="badge badge-danger">New Members</span> -->
                                 <div class="input-group input-group-sm" style="min-width: 150px; width:300px;">
-                                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                    <input 
+                                        type="text" 
+                                        name="search-friend-bar"
+                                        id="search-friend-bar"
+                                        class="form-control float-right" 
+                                        placeholder="Search"
+                                    />
                 
-                                    <div class="input-group-append">
+                                    <!-- <div class="input-group-append">
                                       <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                         
                         <!-- card body -->
                         <div class="card-body p-0">
-                            
+
                             <ul class="users-list clearfix" id="friends-section">
                                 <!-- <li>
                                     <img src="/AdminLTE/dist/img/user1-128x128.jpg" alt="User Image" height=128 width=128>
@@ -71,6 +77,11 @@
 
         </div>
     </div>
+
+    
+
+    <!-- Include Direct CHAT WINDOW HERE -->
+
     
 </div>
 

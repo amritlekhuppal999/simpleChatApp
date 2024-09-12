@@ -38,16 +38,49 @@ const EXCLAMATION_DANGER = '<i class="fas fa-exclamation-triangle" style="color:
 // READ PAGE URL and query Parameters END
 
 
+// Return Current time
+    function currentTime(){
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
 
-function currentTime(){
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
+        return `${hours}:${minutes}:${seconds}`;
+        // console.log(formattedTime);
+    }
+// Return Current time END
 
-    return `${hours}:${minutes}:${seconds}`;
-    // console.log(formattedTime);
-}
+
+// GET chat window template
+    async function getChatWindowTEmplate(friend_data){
+
+        const request_options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                friend_user_id: friend_data.user_id,
+                friend_name: friend_data.name
+            })
+        };
+
+        let url = `/get-chat-window`;
+
+        try {
+            let response = await fetch(url, request_options);
+            let response_data = await response.json();
+
+            return response_data;
+
+        } 
+        catch(error){
+            console.error("Error", error);
+            return null;
+        }
+    }
+// GET chat window template END
+
 
 
 // Selectpicker syntax and options

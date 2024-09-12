@@ -10,7 +10,9 @@
             page_title: `${APP_NAME} | Home`,
             page_css: [],
             page_scripts: [],
+            user_data: client_request.session.user ?  client_request.session.user : false,
         };
+        // console.log(client_request.session.user)
         let return_view = renderViews(page_data);
         server_response.send(return_view);
     }

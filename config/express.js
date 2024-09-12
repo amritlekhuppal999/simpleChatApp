@@ -2,6 +2,7 @@ import express from 'express';
 // import session from 'express-session';
 import path from 'path';
 import { setTimeout } from 'timers/promises';
+import cookieParser from 'cookie-parser';
 
 import {ROOT_DIR, renderViews} from '../globals.js';
 import * as Views from './route-handler.js';
@@ -30,6 +31,8 @@ app.use(express.urlencoded({extended: true}));
 
 // get URL MIDDLEWARE
 app.use(Middlewares.getURL);
+
+// app.use(cookieParser());
 
 // SET Session settings MIDDLEWARE
 app.use(Middlewares.sessionMiddleware);
@@ -101,6 +104,11 @@ app.use(Middlewares.sessionMiddleware);
 
     // get list of user friends
     app.get('/get-friend-list/:page', friendsControllers.getFriendList);
+    // same as above but with search keyword
+    app.get('/get-friend-list/:page/:search_keyword', friendsControllers.getFriendList);
+    
+    // returns chat window
+    app.post('/get-chat-window', friendsControllers.getDirectChatComponent);
     
     
 // CONTROLLERS END

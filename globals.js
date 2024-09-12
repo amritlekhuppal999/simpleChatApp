@@ -66,6 +66,8 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
         const footer = readFile(path.join(LAYOUT, 'footer.html'));
         const scripts = readFile(path.join(LAYOUT, 'scripts.html'));
         
+        // const direct_chat_user = readFile(path.join(LAYOUT, 'direct-chat-user.html'));
+        
         const content = readFile(path.join(ROOT_DIR, 'views', page_data.page));
         
         // let query_params = 'sss';
@@ -90,6 +92,17 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
             initialization_data.csrf_token = page_data.csrf_token;
         } 
 
+
+        const chat_box_section = `<div 
+                id="load-chat-window-section" 
+                style="position:fixed; 
+                    z-index:9; bottom: -14px; right:16px;
+                    /*background-color:blue;*/
+                    max-width: 78vw;
+                    overflow-x:auto;
+                    display:flex; justify-content:flex-end;">
+            </div>`;
+
         
         return `<!DOCTYPE html>
             <html lang="en">
@@ -106,7 +119,9 @@ const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_
 
                         ${control_sidebar} ${footer}
 
+                        ${chat_box_section}
                     </div>
+
 
                     ${scripts}
 
