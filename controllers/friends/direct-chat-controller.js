@@ -81,7 +81,7 @@ async function getDirectChatComponent(requested, response){
             <div class="card-body" style="height:47vh;">
                 
                 <!-- Conversations are loaded here -->
-                <div class="direct-chat-messages" id="direct-chat-msg" style="height:47vh">
+                <div class="direct-chat-messages direct-chat-msg" id="" style="height:47vh">
                 
                     <!-- Message. Default to the left (Sender) -->
                     ${left_msg_dialogue}
@@ -93,20 +93,20 @@ async function getDirectChatComponent(requested, response){
             
             <!-- card footer -->
             <div class="card-footer">
-                <form action="#" method="post" class="send-msg-form" data-friend_user_id="${friend_user_id}" id="friend-chat-form">
+                <form action="#" method="post" class="send-msg-form friend-chat-form" data-friend_user_id="${friend_user_id}">
                     <div class="input-group">
 
                         <input 
                             type="hidden"
                             name="friend-user-id"
-                            id="friend-user-id"
+                            class="friend-user-id"
                             value="${friend_user_id}"
                         />
 
                         <input 
                             type="hidden"
                             name="friend-name"
-                            id="friend-name"
+                            class="friend-name"
                             value="${friend_name}"
                         />
                         
@@ -114,14 +114,15 @@ async function getDirectChatComponent(requested, response){
                             type="text" 
                             name="message" 
                             placeholder="Type Message ..." 
-                            class="form-control"
-                            id="friend-message-content"
+                            class="form-control friend-message-content"
+                            data-friend_user_id="${friend_user_id}"
                         />
 
                         <span class="input-group-append">
                             <button 
                                 type="submit" 
-                                class="btn btn-primary send-msg-btn" id="send-friend-msg-btn">
+                                class="btn btn-primary send-friend-msg-btn" 
+                                data-friend_user_id="${friend_user_id}">
                                 Send
                             </button>
                         </span>

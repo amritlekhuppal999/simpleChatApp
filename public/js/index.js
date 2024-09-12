@@ -4,7 +4,7 @@ window.onload = ()=>{
     
     // console.log(window.initialData);
     
-    document.getElementById("user-name").innerText = window.initialData.name
+    document.getElementById("user-name").innerText = window.initialData.name;
 
     
     LoadChatroomList();
@@ -58,8 +58,6 @@ window.onload = ()=>{
 
     document.addEventListener('click', send_message);
     
-    
-    
     const privateChat_io = io("/privateChat");
 
     // When you connect
@@ -94,7 +92,8 @@ window.onload = ()=>{
         
 
         let element = event.target;
-        if(element.id == "send-friend-msg-btn" || element.id == "friend-message-content"){
+        // if(element.id == "send-friend-msg-btn" || element.id == "friend-message-content")
+        if(element.className.includes("send-friend-msg-btn") || element.className.includes("friend-message-content")){
             event.preventDefault();
 
             // console.log(event.code, event.key);
@@ -105,7 +104,13 @@ window.onload = ()=>{
                 return false;
             }
 
-            let message_field = document.getElementById("friend-message-content");
+            let form_element = element.closest('form');
+
+            // let message_field = document.getElementById("friend-message-content");
+            let message_field = form_element.getElementsByClassName("friend-message-content")[0];
+            let friend_user_id = form_element.dataset.friend_user_id;
+            // let message_field = form_element.getElementsByClassName("friend-message-content")[0];
+
             let text_message = message_field.value;
             text_message = text_message.replace(/\s/g, " ");
             if(text_message.length == 0){
@@ -119,11 +124,12 @@ window.onload = ()=>{
                     id: window.initialData.user_id,
                 },
                 to:{
-                    id: document.getElementById("friend-user-id").value,
+                    id: friend_user_id,
                     name: '',
                 },
                 text: text_message,
-                messageTimestamp: currentTime()
+                messageTimestamp: currentTime(),
+                form_element: form_element
             };
             message_field.value = "";
             
@@ -136,7 +142,11 @@ window.onload = ()=>{
 
     // Display message sent (LEFT) in msg view 
     function display_sent_msg(message_body){
-        const message_stream = document.getElementById("direct-chat-msg");
+        // const message_stream = document.getElementById("direct-chat-msg");
+        const form_element = message_body.form_element;
+        const parent_div = form_element.closest('div[data-friend_user_id="'+form_element.dataset.friend_user_id+'"]');
+        const message_stream = parent_div.getElementsByClassName("direct-chat-msg")[0];
+        
         const DIV = document.createElement('div');
         DIV.classList.add("direct-chat-msg", "right");
 
@@ -171,17 +181,18 @@ window.onload = ()=>{
     // Display message received (RIGHT) in msg view 
     function display_received_msg(message_body){
 
+        let from_user_id = message_body.from.id;
+        let chat_window = document.querySelector('div.friend-chat-window[data-friend_user_id="'+from_user_id+'"]');
+        const message_stream = chat_window.getElementsByClassName("direct-chat-msg")[0];
+
         // check for correct chat-window
-        let chat_window = document.getElementsByClassName("friend-chat-window")[0];
-        if(chat_window.dataset.friend_user_id !== message_body.from.id){
-            
-            return false;
-
-            // 
-        }
+        // let chat_window = document.getElementsByClassName("friend-chat-window")[0];
+        // if(chat_window.dataset.friend_user_id !== message_body.from.id){
+        //     return false;
+        // }
 
 
-        const message_stream = document.getElementById("direct-chat-msg");
+        // const message_stream = document.getElementById("direct-chat-msg");
         const DIV = document.createElement('div');
         DIV.classList.add("direct-chat-msg");
         

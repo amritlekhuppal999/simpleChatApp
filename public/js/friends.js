@@ -35,6 +35,30 @@
     }
     
     // Click EVENT LISTENER on fiends section
+    // document.getElementById('friends-section').addEventListener('click', event=>{
+    //     let element = event.target;
+        
+    //     // To Launch Chat Window
+    //     if(element.className.includes("launch-chat")){
+    //         event.preventDefault();
+    //         // alert(element.dataset.id);
+
+    //         // if(!friends_chat_status[element.dataset.id] || !friends_chat_status[element.dataset.id].chatbox_open){}
+
+    //         friends_chat_status[element.dataset.id] = {
+    //             chatbox_open: true
+    //         }
+            
+    //         let friend_data = {
+    //             user_id: element.dataset.id,
+    //             name: element.dataset.name
+    //         };
+
+    //         launch_chat(friend_data);
+    //     } 
+    //     // else alert("poye");
+    // });
+
     document.getElementById('friends-section').addEventListener('click', event=>{
         let element = event.target;
         
@@ -43,18 +67,25 @@
             event.preventDefault();
             // alert(element.dataset.id);
 
-            // if(!friends_chat_status[element.dataset.id] || !friends_chat_status[element.dataset.id].chatbox_open){}
+            if(!friends_chat_status[element.dataset.id] || !friends_chat_status[element.dataset.id].chatbox_status.active){
 
-            friends_chat_status[element.dataset.id] = {
-                chatbox_open: true
+                friends_chat_status[element.dataset.id] = {
+                    chatbox_status: {
+                        active: true,      // is it visible on screen
+                        expanded: true,    // is it collapsed
+                        collapsed: false,   // is it expanded
+                    }
+                }
+                
+                let friend_data = {
+                    user_id: element.dataset.id,
+                    name: element.dataset.name
+                };
+    
+                launch_chat(friend_data);
             }
-            
-            let friend_data = {
-                user_id: element.dataset.id,
-                name: element.dataset.name
-            };
 
-            launch_chat(friend_data);
+            
         } 
         // else alert("poye");
     });
@@ -220,8 +251,8 @@
         // console.log(res.data);
         let div_ele = document.createElement("div");
         div_ele.innerHTML = res.data.chat_window;
-        // document.getElementById("load-chat-window-section").appendChild(div_ele);
-        document.getElementById("load-chat-window-section").innerHTML = res.data.chat_window;
+        document.getElementById("load-chat-window-section").appendChild(div_ele);
+        // document.getElementById("load-chat-window-section").innerHTML = res.data.chat_window;
         chatbox_open = true;
     }
 
