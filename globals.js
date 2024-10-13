@@ -19,7 +19,14 @@ const mongo_port = process.env.MONGO_PORT;
 const database_name = process.env.MONGO_DB;
 
 // const encodedPassword = encodeURIComponent(password);
-const DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_port}/?authSource=${database_name}`;
+
+let DB_CONNECTION_STRING;
+if(process.env.MONGO_HOST){
+    DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_port}/?authSource=${database_name}`;
+}
+else{
+    DB_CONNECTION_STRING = process.env.MONGODB_URI;
+}
 
 
 // get Hashed Password
