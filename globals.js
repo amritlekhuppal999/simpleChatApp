@@ -12,22 +12,30 @@ const __filename = url.fileURLToPath(import.meta.url);
 const ROOT_DIR = path.dirname(__filename);
 
 // FROM .env file
-const username = process.env.MONGO_USERNAME;
-const password = encodeURIComponent(process.env.MONGO_PASSWORD);
-const host = process.env.MONGO_HOST;
-const mongo_port = process.env.MONGO_PORT;
-const database_name = process.env.MONGO_DB;
+let username;
+let password;
+let host;
+let mongo_port;
+let database_name;
 
 // const encodedPassword = encodeURIComponent(password);
-
 let DB_CONNECTION_STRING;
+
 if(process.env.MONGO_HOST){
+    username = process.env.MONGO_USERNAME;
+    password = encodeURIComponent(process.env.MONGO_PASSWORD);
+    host = process.env.MONGO_HOST;
+    mongo_port = process.env.MONGO_PORT;
+    database_name = process.env.MONGO_DB;
+    
+
     DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_port}/?authSource=${database_name}`;
 }
 else{
     DB_CONNECTION_STRING = process.env.MONGODB_URI;
 }
-
+// DB_CONNECTION_STRING = process.env.MONGODB_URI;
+// console.log(DB_CONNECTION_STRING);
 
 // get Hashed Password
     async function hashPassword(pswd_str, saltRounds=10){
