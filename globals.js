@@ -32,9 +32,9 @@ if(process.env.MONGO_HOST){
     DB_CONNECTION_STRING = `mongodb://${username}:${password}@${host}:${mongo_port}/?authSource=${database_name}`;
 }
 else{
-    DB_CONNECTION_STRING = process.env.MONGODB_URI_ATLAS;
+    DB_CONNECTION_STRING = process.env.MONGODB_URI;
 }
-DB_CONNECTION_STRING = process.env.MONGODB_URI_ATLAS;
+DB_CONNECTION_STRING = process.env.MONGODB_URI;
 // console.log(DB_CONNECTION_STRING);
 
 // get Hashed Password
