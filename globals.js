@@ -34,7 +34,7 @@ if(process.env.MONGO_HOST){
 else{
     DB_CONNECTION_STRING = process.env.MONGODB_URI;
 }
-DB_CONNECTION_STRING = process.env.MONGODB_URI;
+// DB_CONNECTION_STRING = process.env.MONGODB_URI;
 // console.log(DB_CONNECTION_STRING);
 
 // get Hashed Password
@@ -105,7 +105,12 @@ DB_CONNECTION_STRING = process.env.MONGODB_URI;
         if(page_data.csrf_token){
             // csrf_token_ele = `<input type="hidden" id="csrf_token" value="${page_data.csrf_token}" />`;
             initialization_data.csrf_token = page_data.csrf_token;
-        } 
+        }
+        
+        // TEMPERORY
+        if(!process.env.MONGO_HOST){
+            page_data.page_title = `<b class="text-success">${page_data.page_title}<b>`;
+        }
 
 
         const chat_box_section = `<div 
