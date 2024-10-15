@@ -6,6 +6,11 @@ window.onload = ()=>{
     
     document.getElementById("user-name").innerText = window.initialData.name;
 
+    if(window.initialData.isSiteLive){
+        let page_title = document.getElementById("banner-text").innerText;
+        document.getElementById("banner-text").innerHTML = `<b class="text-success">${page_title}<b>`;
+    }
+
     
     LoadChatroomList();
     

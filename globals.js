@@ -108,8 +108,9 @@ else{
         }
         
         // TEMPERORY
+        initialization_data.isSiteLive = false;
         if(!process.env.MONGO_HOST){
-            page_data.page_title = `<b class="text-success">${page_data.page_title}<b>`;
+            initialization_data.isSiteLive = true;
         }
 
 
